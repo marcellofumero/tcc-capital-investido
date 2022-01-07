@@ -1,0 +1,18 @@
+@startuml Nível 1 - Contexto
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+AddElementTag("round", $shape=RoundedBoxShape())
+
+SHOW_PERSON_OUTLINE()
+
+Person(usuario, "Usuário")
+
+System_Boundary(sistema, "Sistema") {
+    System(app, "Sistema", "Descrição do Sistema.", $tags ="round")
+}
+
+System_Ext(sistema_ext, "Sistema Externo", "Descrição do sistema externo", $tags ="round")
+
+Rel_D(usuario, app, "Usa")
+Rel_D(app, sistema_ext, "Consulta")
+@enduml

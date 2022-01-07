@@ -1,0 +1,73 @@
+@startuml Nível 3 - Componentes
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+AddElementTag("round", $shape=RoundedBoxShape())
+AddElementTag("middleware", $shape=RoundedBoxShape(), $borderColor="white", $bgColor="skyblue")
+AddElementTag("script", $shape=RoundedBoxShape(), $borderColor="white", $bgColor="salmon")
+
+Container(web_app, "Frontend", "HTML, CSS, Javascript", "Descrição.", $tags="round")
+AddElementTag("banco_ext", $borderColor="white", $bgColor="darkgray", $fontColor="white")
+
+Container_Boundary(api, "API") {
+  Component(router, "Router", "Clean Arch Router", "Recebe a requisição HTTP e de acordo com o endpoint, direciona para o repectivo Controller.", $tags="round")
+
+  Component(auth_middleware, "Autenticação", "Middleware, JTW", $tags="middleware" )
+
+  Component(validation_middleware, "Validação", "Middleware, Joi", "Faz a validação dos dados presentes na requisição.", $tags="middleware" )
+
+  Component(controller, "Controller", "Clean Arch Controller", "Recebe a requisição, extrai os dados e envia para o Service. Após receber a resposta do Service, envia o resultado para o cliente.", $tags="round")
+
+  Component(service, "Service", "Clean Arch Service", "Recebe a requisição e aplica as devidas regras de negócio. Caso seja necessário, faz a comunicação com o banco de dados através da Repository. Depois de tudo pronto, envia a resposta ao Controller.", $tags="round")
+
+  Component(repository, "Repository", "Clean Arch Repository", "Recebe a chamada de função, faz a comunicação com a BaseRepository os parâmetros necessários para fazer a consulta no banco de dados. Depois de receber a resposta, envia a mesma ao Service.", $tags="round")
+
+  Component(base_repository, "BaseRepository", "Clean Arch BaseRepository", "Recebe os parâmetros da Repository para fazer a consulta no banco de dados, consulta a SqlCommandsHandler para obter a query de acordo com os parâmetros passados e por fim, faz a comunicação com o bando de dados através da ExecDatabase. Após tudo pronto, retorna o resultado para a Repository", $tags="round")
+
+  Component(sql_commands_handler, "SqlCommandHandler", "Clean Arch SqlCommandHandler", "Recebe os parâmetros da BaseRepository, acessa o diretório de scripts de acordo com os parâmetros recebidos e retorna a respectiva query para a BaseRepository.", $tags="round")
+
+  Component(scripts_sql, "Scripts SQL", "SQL", "Arquivos de comandos SQL identificados pelo nome do método.", $tags="script")
+
+  Component(exec_database, "ExecDatabase", "Clean Arch ExecDatabase", "Faz a comunicação com o banco de dados interno.", $tags="round")
+
+  Component(exec_database_ext, "ExecDatabaseExt", "Clean Arch ExecDatabase", "Faz a comunicação com o banco de dados externo", $tags="round")
+
+  ComponentDb(banco_interno, "BD Interno", "SQL Server", "Banco de dados interno.")
+
+  Rel_D(web_app, router, "Requisiçao", "HTTP, Json")
+
+  Rel_D(router, auth_middleware, "Requisição", "Express")
+  Rel_R(router, controller, "Requisição", "Express")
+
+  Rel_R(auth_middleware, validation_middleware, "Requisição", "Express")
+
+  Rel_U(validation_middleware, controller, "Requisição", "Express")
+
+  Rel_U(controller, web_app, "Retorno", "HTTP, Json")
+  Rel_R(controller,service, "Requisição", "Express")
+
+  Rel_L(service, controller, "Retorno")
+  Rel_D(service, repository, "Chamada de função")
+
+  Rel_R(repository, service, "Retorno")
+  Rel_D(repository, base_repository, "Passa o nome do método, o diretório e os pamâmetros para fazer a consulta no banco de dados")
+
+  Rel_R(base_repository, repository, "Retorno.")
+  Rel_L(base_repository, sql_commands_handler, "Passa o nome do método e o diretório onde se encontra a query para fazer a comunicação com o banco de dados")
+
+  Rel_R(sql_commands_handler, base_repository, "Retorna a query.")
+  Rel_L(sql_commands_handler, scripts_sql, "Obtem a query")
+
+  Rel_R(base_repository, exec_database, "Passa a query e os parâmetros para fazer a comunicação com o banco de dados.")
+  Rel_D(base_repository, exec_database_ext, "Passa a query e os parâmetros para fazer a comunicação com o banco de dados.")
+
+  Rel_L(exec_database, base_repository,  "Retorno")
+  Rel_U(exec_database, banco_interno, "Consulta", "SQL", "Consulta no banco de dados interno.")
+
+  Rel_R(exec_database_ext, base_repository,  "Retorno")
+}
+
+ContainerDb(banco_ext, "BD Externo", "SQL Server", "Banco de dados externo.", $tags = "banco_ext")
+
+Rel_D(exec_database_ext, banco_ext, "Consulta", "SQL", "Consulta no banco de dados externo.")
+
+@enduml

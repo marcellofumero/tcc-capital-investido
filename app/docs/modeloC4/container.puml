@@ -1,0 +1,24 @@
+@startuml Nível 2 - Container
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+AddElementTag("round", $shape=RoundedBoxShape())
+AddElementTag("banco", $borderColor="white", $bgColor="steelblue", $fontColor="white")
+AddElementTag("banco_ext", $borderColor="white", $bgColor="darkgray", $fontColor="white")
+
+SHOW_PERSON_OUTLINE()
+
+Person(usuario, "Usuário")
+
+System_Boundary(sistema, "Sistema") {
+    Container(web_app, "Frontend", "HTML, CSS, Javascript", "Descrição.", $tags="round")
+    Container(api, "API", "Node.js", "Descrição.", $tags="round")
+    ContainerDb(banco_interno, "BD Interno", "SQL Server", "Banco de dados interno.", $tags = "banco")
+}
+
+ContainerDb(banco_ext, "BD Externo", "SQL Server", "Banco de dados externo", $tags = "banco_ext")
+
+Rel_D(usuario, web_app, "Usa")
+BiRel_D(web_app, api, "Requisiçao / Resposta", "HTTP, Json")
+Rel_D(api, banco_ext, "Consulta", "SQL", "Consulta no banco de dados externo.")
+Rel_R(api, banco_interno, "Consulta", "SQL", "Consulta no banco de dados interno.")
+@enduml

@@ -1,0 +1,104 @@
+swagger: "2.0"
+info:
+  description: "Modelo API Node"
+  version: "1.0.0"
+  title: "API Modelo"
+
+schemes:
+  - "http"
+
+securityDefinitions:
+  token:
+    type: "apiKey"
+    name: "Authorization"
+    in: header
+
+tags:
+  - name: "Exemplo GET"
+    description: "Descrição do endpoint"
+  - name: "Exemplo POST"
+    description: "Descrição do endpoint"
+
+paths:
+  /exemplo/{id}:
+    get:
+      tags:
+        - "Exemplo GET"
+      summary: "Retorno busca"
+      operationId: "controllerGet"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Sucesso ao retornar dados!"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ExemploGet"
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Nenhum retorno encontrado."
+      security:
+        - token: []
+
+  /exemplo/:
+    post:
+      tags:
+        - "Exemplo POST"
+      summary: "Registra dados"
+      operationId: "controllerPost"
+      consumes:
+      - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+      - in: body
+        name: Descricao
+        schema:
+          type: object
+          required:
+            - param
+          properties:
+            param:
+              type: string
+      responses:
+        "201":
+          description: "Dados gravados com sucesso!"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ExemploPost"
+        "400":
+          description: "Nenhum registro foi feito."
+        "401":
+          description: "Unauthorized"
+      security:
+        - token: []
+
+definitions:
+  ExemploGet:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+        example: 1
+      param:
+        type: "string"
+        example: "exemplo"
+
+  ExemploPost:
+    type: "object"
+    properties:
+      status:
+        type: "integer"
+        format: "int64"
+        example: 201
+      response:
+        type: "string"
+        example: "Dados gravados com sucesso!"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

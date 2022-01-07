@@ -1,17 +1,16 @@
-const express = require('express');
-const bodyParser = require('body-parser');
+function loadenv () {
+  const env = process.env.NODE_ENV.trim();
+  if (env === "dev") return ".env.dev";
+  else if (env === "hml") return ".env.hml";
+  else if (env === "prod") return ".env";
+  else return ".env.dev";
+}
 
-const app = express();
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false}));
-
-require('./controllers/authController')(app);
-
-app.get('/', (req, res) => {
-    res.send('OK');
+require("dotenv").config({
+  path: loadenv()
 });
 
-app.listen(3000, () => {
-    console.log('API Capital Investido');
-});
+process.setMaxListeners(Infinity);
+
+const app = require("./app");
+app.listen(process.env.PORT);

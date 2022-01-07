@@ -10,7 +10,7 @@ router.post('/register', async(req, res) => {
 
         return res.send({ usuario });
     } catch (err){
-        return res.status(400).send({ error: 'Falha ao cadastrar usuário'});
+        return res.status(400).send({ error: 'Falha ao cadastrar usuário'+err});
     }
 });
 
