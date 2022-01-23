@@ -5,6 +5,7 @@ const bodyParser= require('body-parser');
 const app       = module.exports =  express();
 
 var usuario = require('./routes/usuario');
+var perfilUsuario = require('./routes/perfilUsuario');
 
 //app.listen(config.web.port);
 app.listen(3000, () => {
@@ -24,3 +25,4 @@ app.get('/',function(req,res){
 });
 
 app.use('/v1/usuario',usuario);
+app.use('/v1/perfilUsuario',perfilUsuario);

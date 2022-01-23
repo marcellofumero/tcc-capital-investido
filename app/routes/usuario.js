@@ -1,14 +1,20 @@
-var express = require('express');
-var router  = express.Router();
-var controller = require('../controllers/usuario');
-var UsuarioTokenAcesso = require('../models/protecaoTokenAcesso');
-var Acesso = new UsuarioTokenAcesso();
+const express = require('express');
+const router  = express.Router();
+const controller = require('../controllers/usuario');
+const UsuarioTokenAcesso = require('../models/protecaoTokenAcesso');
+const Acesso = new UsuarioTokenAcesso();
 
 //################################################################################
 //##########  ##########
 //################################################################################
 
-router.get('/usuario', function(req, res){       
+router.post('/autenticar', function(req, res){       
+    controller.usuarioAutenticar(req,function(resp){
+        res.status(resp.status).json(resp);
+    })
+});
+
+router.get('/usuario', Acesso.verificaTokenAcesso, function(req, res){       
     controller.usuarioListarTodos(req,function(resp){
         res.status(resp.status).json(resp);
     })
