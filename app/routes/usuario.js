@@ -8,12 +8,6 @@ const Acesso = new UsuarioTokenAcesso();
 //##########  ##########
 //################################################################################
 
-router.post('/autenticar', function(req, res){       
-    controller.usuarioAutenticar(req,function(resp){
-        res.status(resp.status).json(resp);
-    })
-});
-
 router.get('/usuario', Acesso.verificaTokenAcesso, function(req, res){       
     controller.usuarioListarTodos(req,function(resp){
         res.status(resp.status).json(resp);
@@ -40,6 +34,24 @@ router.put('/usuario/:id', function(req, res){
 
 router.delete('/usuario/:id', function(req, res){       
     controller.usuarioExcluir(req,function(resp){
+        res.status(resp.status).json(resp);
+    })
+});
+
+router.post('/autenticar', function(req, res){       
+    controller.usuarioAutenticar(req,function(resp){
+        res.status(resp.status).json(resp);
+    })
+});
+
+router.post('/esqueciSenha', function(req, res){       
+    controller.usuarioEsqueciSenha(req,function(resp){
+        res.status(resp.status).json(resp);
+    })
+});
+
+router.post('/resetarSenha', function(req, res){       
+    controller.usuarioResetarSenha(req,function(resp){
         res.status(resp.status).json(resp);
     })
 });

@@ -17,11 +17,19 @@ const UsuarioSchema = new mongoose.Schema({
         required: true,
         select: false,
     },
+    passwordResetToken: {
+        type: String,
+        select: false,
+    },
+    passwordResetExpires: {
+        type: Date,
+        select: false,
+    },
     createAt: {
         type: Date,
         dafault: Date.now,
     }
-});
+},{ timestamps: {} });
 
 UsuarioSchema.pre('save', async function(next){
     const hash = await bcrypt.hash(this.password, 10);

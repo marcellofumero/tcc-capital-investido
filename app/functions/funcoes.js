@@ -1,21 +1,21 @@
 var enviaEmail = function(emailDe, emailPara, emailAssunto, emailTexto, emailHtml) {
-    
+    console.log('aqui')
     const nodemailer = require('nodemailer');
 
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-        host: 'smtp.mastermaq.com.br',
-        port: 25,
-        secure: false, // secure:true for port 465, secure:false for port 587
-        /*auth: {
-            user: '',
-            pass: ''
-        }*/
+        host: 'smtp.mailtrap.io',
+        port: 2525,
+        //secure: false, // secure:true for port 465, secure:false for port 587
+        auth: {
+            user: "1ceb44523128e4",
+            pass: "63dff7b9dc18e5"
+        }
     });
 
     // setup email data with unicode symbols
     let mailOptions = {
-        from: emailDe, // Endereço de e-mail de envio "Mastermaq" <mastermaq@mastermaq.com.br>
+        from: emailDe, // Endereço de e-mail de envio "From" <capitalinvestido@capitalinvestido.com.br>
         to: emailPara, // E-mails destinatários email1@email.com, email2@email.com
         subject: emailAssunto, // Assunto
         text: emailTexto, // Texto simples do corpo do e-mail
