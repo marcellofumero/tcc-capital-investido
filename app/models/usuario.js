@@ -25,6 +25,16 @@ const UsuarioSchema = new mongoose.Schema({
         type: Date,
         select: false,
     },
+    perfil: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'PerfilUsuario',
+        required: true     
+    },
+    status: {
+        type: String,
+        required: true,
+        dafault: 'Ativo'
+    },
     createAt: {
         type: Date,
         dafault: Date.now,

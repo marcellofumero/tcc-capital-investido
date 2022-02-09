@@ -30,7 +30,7 @@ var UsuarioTokenAcesso = new SchemaObject(
                         if (!/^Bearer$/i.test(schema)){
                            return res.status(401).send({status: 401, mensagem: "Token com formatação incorreta."});
                         }
-                        console.log('token', token)
+                        
                         var decoded = jwt.verify(token, 'Capital@Investido');
                         
                         return next();

@@ -11,7 +11,7 @@ exports.usuarioListar = async function(req, callback){
     try{
         const { id } = req.params;
         
-        const usuario = await Usuario.findById(id);        
+        const usuario = await Usuario.findById(id).populate('perfil');        
         
         if (usuario){
             callback({status: 200, mensagem: 'Usuário localizado com sucesso.', dados: usuario}); 
@@ -25,7 +25,7 @@ exports.usuarioListar = async function(req, callback){
 
 exports.usuarioListarTodos = async function(req, callback){
     try{        
-        const usuario = await Usuario.find();        
+        const usuario = await Usuario.find().populate('perfil');        
         
         if (usuario){
             callback({status: 200, mensagem: 'Usuários localizados com sucesso.', dados: usuario}); 
@@ -47,6 +47,17 @@ exports.usuarioCadastrar = async function(req, callback){
         callback({status: 400, mensagem: 'Não foi possível realizar o cadastro do usuário.', erro: erro}); 
     }                         
 };  
+
+exports.usuarioAtualizar = async function(req, callback){
+    try{        
+        const { id } = req.params;
+        const perfilUsuario = await Usuario.findByIdAndUpdate(id, req.body);
+
+        callback({status: 201, mensagem: 'Usuário atualizado com sucesso', _id: perfilUsuario._id});        
+    } catch (erro){
+        callback({status: 400, mensagem: 'Não foi possível realizar a atualização do usuário.', erro: erro}); 
+    }                         
+}; 
 
 exports.usuarioAutenticar = async function(req, callback){
     try{
