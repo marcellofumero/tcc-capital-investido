@@ -21,7 +21,7 @@ app.use(function(req, res, next){
 })
 
 app.get('/',function(req,res){
-	res.end('Bem-vindo a API do Pode Contar')	
+	res.end('Bem-vindo a API do Capital Investido')	
 });
 
 app.use('/v1/usuario',usuario);
