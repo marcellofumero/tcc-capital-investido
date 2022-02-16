@@ -61,6 +61,7 @@ exports.usuarioAtualizar = async function(req, callback){
 
 exports.usuarioAutenticar = async function(req, callback){
     try{
+        
         const { email, password } = req.body;                
         const usuario = await Usuario.findOne({ email }).select('+password');
         
@@ -101,13 +102,14 @@ exports.usuarioEsqueciSenha = async function(req, callback){
                     passwordResetExpires: now
                 }
             });
-
+            const nomeusuario = usuario.nome;
+           
             mailer.sendMail({
                 to: email,
                 from: '<Capital Investido>capitalinvestido@capitalinvestido.com.br',
                 subject: 'Recuperação de senha',
                 template: 'usuario/esqueci-senha',
-                context: { token },
+                context: { token , nomeusuario },
             }, (erro) => {
                 if (erro)
                     callback({status: 400, mensagem: 'Ocorreu uma falha ao tentar enviar o e-mail para redefinir a senha do usuário.', erro: erro});
@@ -117,7 +119,7 @@ exports.usuarioEsqueciSenha = async function(req, callback){
             
             
         }else{
-            callback({status: 200, mensagem: 'Não foi localizado o cadastro do usuário solicitado para resetar a senha.'}); 
+            callback({status: 400, mensagem: 'Não foi localizado o cadastro do usuário solicitado para resetar a senha.'}); 
         }               
     } catch (erro){
         callback({status: 400, mensagem: 'Ocorreu uma falha ao tentar iniciar o processo para redefinir a senha do usuário.', erro: erro}); 
