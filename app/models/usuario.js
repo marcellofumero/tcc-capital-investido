@@ -27,8 +27,7 @@ const UsuarioSchema = new mongoose.Schema({
     },
     perfil: {
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'PerfilUsuario',
-        required: true     
+        ref: 'PerfilUsuario',            
     },
     status: {
         type: String,

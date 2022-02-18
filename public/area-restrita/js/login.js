@@ -131,6 +131,49 @@ login.metodos = {
             $("#msgEsqueciSenha").addClass('alert-danger');
             $("#msgEsqueciSenha").text('Ocorreu um erro inesperado: ' + erro);
         }
+    },
+
+    criarConta: (nome = null, email = null , password = null, status = 'Ativo') => {        
+        try{                
+            const dados = { nome , email , password , status };
+                        
+            $.ajax({
+                type: 'POST',
+                url: login.var.urlApiAreaRestrita + '/v1/usuario/usuario',
+                data: dados,
+                success: function (response) {                   
+                    if (response.status == 201){
+                        $("#msgCriarConta").removeClass('alert-danger');
+                        $("#msgCriarConta").addClass('alert-success');
+                        $("#msgCriarConta").text(response.mensagem);
+                        $("#msgCriarConta").show();    
+                        
+                        localStorage.setItem("TokenAcesso",response.token);
+                        localStorage.setItem("IdUsuario",response._id);
+                        localStorage.setItem("NomeUsuario",nome);
+                        localStorage.setItem("EmailUsuario",email);
+
+                        window.setTimeout(()=>{
+                            window.location.href = "index.html"
+                        }, 3000);                
+                    }                        
+                },
+                error: function (xhr, ajaxOptions, error) {
+                    console.log(xhr)
+                    if (xhr.status == 400){
+                        $("#msgCriarConta").removeClass('alert-success');
+                        $("#msgCriarConta").addClass('alert-danger');
+                        $("#msgCriarConta").text(xhr.responseJSON.mensagem);
+                        $("#msgCriarConta").show();
+                    }
+                }
+            });
+        } 
+        catch (erro){
+            $("#msgCriarConta").removeClass('alert-success');
+            $("#msgCriarConta").addClass('alert-danger');
+            $("#msgCriarConta").text('Ocorreu um erro inesperado: ' + erro);
+        }
     }
 
 }
