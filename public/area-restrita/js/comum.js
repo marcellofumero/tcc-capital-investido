@@ -36,8 +36,7 @@ comum.eventos = {
 }
 
 comum.var = {
-     
-
+    urlApiAreaRestrita: localStorage.getItem('UrlApiAreaRestrita')
 }
 
 comum.metodos = {
