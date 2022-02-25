@@ -38,7 +38,7 @@ exports.usuarioListarTodos = async function(req, callback){
 };  
 
 exports.usuarioCadastrar = async function(req, callback){
-    try{        
+    try{                
         const usuario = await Usuario.create(req.body);
         const token = Acesso.gerarTokenAcesso( usuario.id );
 

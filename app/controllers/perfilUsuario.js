@@ -8,7 +8,7 @@ exports.perfilUsuarioListar = async function(req, callback){
         const { id } = req.params;
         
         const perfilUsuario = await PerfilUsuario.findById(id);        
-        console.log('perfilUsuarioListar', { id }, perfilUsuario);
+        
         if (perfilUsuario){
             callback({status: 200, mensagem: 'Perfil de Usuário localizado com sucesso.', dados: perfilUsuario}); 
         }else{
@@ -22,7 +22,7 @@ exports.perfilUsuarioListar = async function(req, callback){
 exports.perfilUsuarioListarTodos = async function(req, callback){
     try{        
         const perfilUsuario = await PerfilUsuario.find();        
-        console.log('perfilUsuarioListarTodos', perfilUsuario);
+        
         if (perfilUsuario){
             callback({status: 200, mensagem: 'Perfil de usuários localizados com sucesso.', dados: perfilUsuario}); 
         }else{
