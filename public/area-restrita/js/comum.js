@@ -44,6 +44,33 @@ comum.metodos = {
     logout: () => {
         localStorage.clear();
         window.location.href = './login.html'
+    },
+
+    mensagemInformativa: (nomeComponente, mensagem = '', tipo = 'sucesso') => {
+        // tipo: sucesso, alerta ou erro
+        switch (tipo){
+            case "sucesso":
+                $("#"+nomeComponente).removeClass('alert-danger');
+                $("#"+nomeComponente).removeClass('alert-warning');
+                $("#"+nomeComponente).addClass('alert-success');
+                $("#"+nomeComponente).text(mensagem);
+                $("#"+nomeComponente).show(); 
+                break; 
+            case "alerta":
+                $("#"+nomeComponente).removeClass('alert-danger');
+                $("#"+nomeComponente).removeClass('alert-success');
+                $("#"+nomeComponente).addClass('alert-warning');
+                $("#"+nomeComponente).text(mensagem);
+                $("#"+nomeComponente).show(); 
+                break;  
+            case "erro":
+                $("#"+nomeComponente).removeClass('alert-success');
+                $("#"+nomeComponente).removeClass('alert-warning');
+                $("#"+nomeComponente).addClass('alert-danger');
+                $("#"+nomeComponente).text(mensagem);
+                $("#"+nomeComponente).show(); 
+                break;                     
+        }
     }
 
 }
