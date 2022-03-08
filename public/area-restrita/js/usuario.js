@@ -38,7 +38,12 @@ usuario.metodos = {
                                     <td>${elem.nome}</td>
                                     <td>${elem.email}</td>
                                     <td>${perfil}</td>
-                                    <td>${elem.status}</td>                            
+                                    <td>${elem.status}</td>  
+                                    <td align="center">
+                                        <a href="usuario-editar.html?id=${elem._id}"><i class="far fa-edit" title="Editar" style="cursor:pointer"></i></a>
+                                        &nbsp;
+                                        <i class="far fa-trash-alt" title="Excluir" style="cursor:pointer"></i>
+                                    </td>                          
                                 </tr>
                             `); 
                         });                        
@@ -68,7 +73,7 @@ usuario.metodos = {
     criarConta: (nome = null, email = null , password = null, perfil = null,  status = 'Ativo') => {        
         try{                
             const dados = { nome , email , password , perfil , status };
-            console.log('criarConta',dados)            
+                      
             $.ajax({
                 type: 'POST',
                 url: comum.var.urlApiAreaRestrita + '/v1/usuario/usuario',
@@ -119,6 +124,76 @@ usuario.metodos = {
         } 
         catch (erro){
             comum.metodos.mensagemInformativa('msgCriarConta','Ocorreu um erro inesperado: ' + erro,'erro');
+        }
+    },
+
+    obterDadosUsuario: () => {        
+        try{                                 
+            var idUsuario = location.search.slice(1).split('=')[1];
+            usuario.metodos.listarPerfilUsuario();
+            if (localStorage.getItem('PerfilUsuario') == "Administrador"){
+                $("#selectStatus").removeAttr("disabled");
+                $("#selectPerfil").removeAttr("disabled");
+            }
+            
+            $.ajax({
+                type: 'GET',
+                url: comum.var.urlApiAreaRestrita + '/v1/usuario/usuario/' + idUsuario,
+                beforeSend: (request) => { request.setRequestHeader("Authorization", "Bearer "+localStorage.getItem('TokenAcesso')); },
+                success: function (response) { 
+                    console.log('obterDadosUsuario',response)                  
+                    if (response.status == 200){
+                        $("#inputFirstName").val(response.dados.nome);      
+                        $("#inputEmail").val(response.dados.email);  
+                        $("#selectStatus option[value="+response.dados.status+"]").attr('selected','selected');     
+                        $("#selectPerfil option[value="+response.dados.perfil._id+"]").attr('selected','selected');     
+                    }                        
+                },
+                error: function (xhr, ajaxOptions, error) {
+                    if (xhr.status == 400){
+                        comum.metodos.mensagemInformativa('msgEditarConta',xhr.responseJSON.mensagem,'erro');                        
+                    }
+                    if (xhr.status == 401){
+                        window.location.href = './401.html'
+                    }
+                }
+            });
+            
+        } 
+        catch (erro){
+            comum.metodos.mensagemInformativa('msgEditarConta','Ocorreu um erro inesperado: ' + erro,'erro');
+        }
+    },
+
+    atualizarDadosUsuario: (nome = null, email = null , password = null, perfil = null,  status = 'Ativo') => {        
+        try{   
+            var idUsuario = location.search.slice(1).split('=')[1]             
+            const dados = { nome , email , perfil , status };
+            if (password != null && password != '' && password != undefined){
+                dados['password'] = password;
+            }
+            console.log('atualizarDadosUsuario',dados)   
+                   
+            $.ajax({
+                type: 'PUT',
+                url: comum.var.urlApiAreaRestrita + '/v1/usuario/usuario/' + idUsuario,
+                data: dados,
+                success: function (response) {                   
+                    if (response.status == 201){
+                        comum.metodos.mensagemInformativa('msgEditarConta',response.mensagem,'sucesso');                                                            
+                    }                        
+                },
+                error: function (xhr, ajaxOptions, error) {
+                    console.log(xhr)
+                    if (xhr.status == 400){
+                        comum.metodos.mensagemInformativa('msgEditarConta',xhr.responseJSON.mensagem,'erro');
+                    }
+                }
+            });
+            
+        } 
+        catch (erro){
+            comum.metodos.mensagemInformativa('msgEditarConta','Ocorreu um erro inesperado: ' + erro,'erro');
         }
     },
 

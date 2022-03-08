@@ -41,6 +41,7 @@ login.metodos = {
                         localStorage.setItem("IdUsuario",response.dados._id);
                         localStorage.setItem("NomeUsuario",response.dados.nome);
                         localStorage.setItem("EmailUsuario",response.dados.email);
+                        localStorage.setItem("PerfilUsuario",response.dados.perfil.nome);
 
                         window.setTimeout(()=>{
                             window.location.href = "index.html"

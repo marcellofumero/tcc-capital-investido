@@ -51,9 +51,15 @@ exports.usuarioCadastrar = async function(req, callback){
 exports.usuarioAtualizar = async function(req, callback){
     try{        
         const { id } = req.params;
-        const perfilUsuario = await Usuario.findByIdAndUpdate(id, req.body);
+        const usuario = await Usuario.findByIdAndUpdate(id, req.body);
+        
+        if (req.body.password){            
+            const usuarioAux = await Usuario.findById(id);
+            usuarioAux.password = req.body.password;
+            await usuarioAux.save();
+        }        
 
-        callback({status: 201, mensagem: 'Usuário atualizado com sucesso', _id: perfilUsuario._id});        
+        callback({status: 201, mensagem: 'Usuário atualizado com sucesso', _id: usuario._id});        
     } catch (erro){
         callback({status: 400, mensagem: 'Não foi possível realizar a atualização do usuário.', erro: erro}); 
     }                         
@@ -63,7 +69,7 @@ exports.usuarioAutenticar = async function(req, callback){
     try{
         
         const { email, password } = req.body;                
-        const usuario = await Usuario.findOne({ email }).select('+password');
+        const usuario = await Usuario.findOne({ email }).select('+password').populate('perfil');
         
         if (!usuario){
             callback({status: 400, mensagem: 'Usuário não encontrado.'});
