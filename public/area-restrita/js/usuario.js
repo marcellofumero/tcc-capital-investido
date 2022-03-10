@@ -40,9 +40,12 @@ usuario.metodos = {
                                     <td>${perfil}</td>
                                     <td>${elem.status}</td>  
                                     <td align="center">
-                                        <a href="usuario-editar.html?id=${elem._id}"><i class="far fa-edit" title="Editar" style="cursor:pointer"></i></a>
+                                        <a href="usuario-editar.html?id=${elem._id}" style="text-decoration:none !important">
+                                            <i class="far fa-edit" title="Editar" style="cursor:pointer"></i>
+                                        </a>
                                         &nbsp;
-                                        <i class="far fa-trash-alt" title="Excluir" style="cursor:pointer"></i>
+                                        <i class="far fa-trash-alt" onclick="$('#lblNomeUsuarioExcluir').text('${elem.nome}')" title="Excluir" style="cursor:pointer" data-toggle="modal" data-target="#modalExemplo"></i>
+                                        
                                     </td>                          
                                 </tr>
                             `); 
@@ -66,7 +69,7 @@ usuario.metodos = {
             });
         } 
         catch (erro){
-            console.log('catch',erro)
+            comum.metodos.mensagemInformativa('msgCriarConta','Ocorreu um erro inesperado: ' + erro,'erro');
         }
     },
 

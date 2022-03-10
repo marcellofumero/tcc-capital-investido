@@ -28,7 +28,7 @@ login.metodos = {
             
             $.ajax({
                 type: 'POST',
-                url: login.var.urlApiAreaRestrita + '/v1/usuario/autenticar',
+                url: localStorage.getItem('UrlApiAreaRestrita') + '/v1/usuario/autenticar',
                 data: dados,
                 success: function (response) {                   
                     if (response.status == 200){

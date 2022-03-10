@@ -69,7 +69,7 @@ exports.usuarioAutenticar = async function(req, callback){
     try{
         
         const { email, password } = req.body;                
-        const usuario = await Usuario.findOne({ email }).select('+password').populate('perfil');
+        const usuario = await Usuario.findOne({ email , status: 'Ativo' }).select('+password').populate('perfil');
         
         if (!usuario){
             callback({status: 400, mensagem: 'Usuário não encontrado.'});

@@ -25,7 +25,8 @@ $(document).ready(() => {
 
 comum.eventos = {
     init: () => {        
-        localStorage.setItem('UrlApiAreaRestrita','http://localhost:3000');        
+        localStorage.setItem('UrlApiAreaRestrita','http://localhost:3000');  
+        comum.metodos.executaPermissao();      
     },
 
     verificaTokenAcesso: () => {
@@ -71,6 +72,22 @@ comum.metodos = {
                 $("#"+nomeComponente).show(); 
                 break;                     
         }
+    },
+    
+    direcionaDadosPessoais: () => {
+        window.location.href = 'usuario-editar.html?id=' + localStorage.getItem('IdUsuario');
+    },
+
+    executaPermissao: () => {
+        switch (localStorage.getItem('PerfilUsuario'))  {
+            case "Perfil Vip":
+                $('#menuAdministracao').hide();
+                break;
+            case "Perfil Free":
+                $('#menuAdministracao').hide();
+                $('#menuListaTradeVip').hide();
+                break;                    
+        } 
     }
 
 }
