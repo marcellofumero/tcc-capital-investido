@@ -44,7 +44,7 @@ usuario.metodos = {
                                             <i class="far fa-edit" title="Editar" style="cursor:pointer"></i>
                                         </a>
                                         &nbsp;
-                                        <i class="far fa-trash-alt" onclick="$('#lblNomeUsuarioExcluir').text('${elem.nome}')" title="Excluir" style="cursor:pointer" data-toggle="modal" data-target="#modalExemplo"></i>
+                                        <i class="far fa-trash-alt" onclick="$('#modalExemplo').modal('show');$('#msgExcluirUsuario').hide();$('#lblNomeUsuarioExcluir').text('${elem.nome}');$('#txtUsuarioExcluir').val('${elem._id}')" title="Excluir" style="cursor:pointer" ></i>
                                         
                                     </td>                          
                                 </tr>
@@ -144,7 +144,7 @@ usuario.metodos = {
                 url: comum.var.urlApiAreaRestrita + '/v1/usuario/usuario/' + idUsuario,
                 beforeSend: (request) => { request.setRequestHeader("Authorization", "Bearer "+localStorage.getItem('TokenAcesso')); },
                 success: function (response) { 
-                    console.log('obterDadosUsuario',response)                  
+                                     
                     if (response.status == 200){
                         $("#inputFirstName").val(response.dados.nome);      
                         $("#inputEmail").val(response.dados.email);  
@@ -197,6 +197,40 @@ usuario.metodos = {
         } 
         catch (erro){
             comum.metodos.mensagemInformativa('msgEditarConta','Ocorreu um erro inesperado: ' + erro,'erro');
+        }
+    },
+
+    excluirUsuario: (idUsuario) => {        
+        try{                                  
+            $.ajax({
+                type: 'DELETE',
+                url: comum.var.urlApiAreaRestrita + '/v1/usuario/usuario/' + idUsuario,
+                beforeSend: (request) => { request.setRequestHeader("Authorization", "Bearer "+localStorage.getItem('TokenAcesso')); },
+                success: function (response) { 
+                                      
+                    if (response.status == 201){                        
+                        comum.metodos.mensagemInformativa('msgExcluirUsuario',response.mensagem,'sucesso'); 
+                        $('#msgExcluirUsuario').show();
+                        window.setTimeout(()=>{
+                            $('#modalExemplo').modal('hide'); 
+                            $("#datatablesSimple tbody").text('');                                                       
+                            usuario.metodos.listarTodos();
+                        }, 2000);              
+                    }                        
+                },
+                error: function (xhr, ajaxOptions, error) {
+                    if (xhr.status == 400){
+                        comum.metodos.mensagemInformativa('msgExcluirUsuario',xhr.responseJSON.mensagem,'erro');                        
+                    }
+                    if (xhr.status == 401){
+                        window.location.href = './401.html'
+                    }
+                }
+            });
+            
+        } 
+        catch (erro){
+            comum.metodos.mensagemInformativa('msgExcluirUsuario','Ocorreu um erro inesperado: ' + erro,'erro');
         }
     },
 

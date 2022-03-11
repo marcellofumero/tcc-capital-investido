@@ -14,7 +14,7 @@ router.get('/usuario', Acesso.verificaTokenAcesso, function(req, res){
     })
 });
 
-router.get('/usuario/:id', function(req, res){       
+router.get('/usuario/:id', Acesso.verificaTokenAcesso, function(req, res){       
     controller.usuarioListar(req,function(resp){
         res.status(resp.status).json(resp);
     })
@@ -26,13 +26,13 @@ router.post('/usuario', function(req, res){
     })
 });
 
-router.put('/usuario/:id', function(req, res){       
+router.put('/usuario/:id', Acesso.verificaTokenAcesso, function(req, res){       
     controller.usuarioAtualizar(req,function(resp){
         res.status(resp.status).json(resp);
     })
 });
 
-router.delete('/usuario/:id', function(req, res){       
+router.delete('/usuario/:id', Acesso.verificaTokenAcesso, function(req, res){       
     controller.usuarioExcluir(req,function(resp){
         res.status(resp.status).json(resp);
     })

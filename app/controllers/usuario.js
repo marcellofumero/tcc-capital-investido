@@ -167,3 +167,15 @@ exports.usuarioResetarSenha = async function(req, callback){
         callback({status: 400, mensagem: 'Ocorreu uma falha ao tentar redefinir a senha do usuário.', erro: erro}); 
     }                              
 };  
+
+
+exports.usuarioExcluir = async function(req, callback){
+    try{        
+        const { id } = req.params;
+        const usuario = await Usuario.findByIdAndDelete(id, req.body);
+
+        callback({status: 201, mensagem: 'Usuário excluído com sucesso', _id: usuario._id});        
+    } catch (erro){
+        callback({status: 400, mensagem: 'Não foi possível realizar a exclusão do usuário.', erro: erro}); 
+    }                          
+}; 

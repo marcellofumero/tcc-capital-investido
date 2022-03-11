@@ -170,11 +170,15 @@
                 </button>
                 </div>
                 <div class="modal-body">
-                Deseja realmente excluir o usuário <i><span id="lblNomeUsuarioExcluir"></span></i>?
+                    Deseja realmente excluir o usuário <i><span id="lblNomeUsuarioExcluir"></span></i>?
+                    <input type="hidden" id="txtUsuarioExcluir" />
+                    <div id="msgExcluirUsuario" class="form-floating mb-3 alert alert-danger" role="alert" style="display: none" >
+                        &nbsp;
+                    </div>
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                <button id="btnExcluirUsuario" type="button" class="btn btn-primary">Sim</button>
+                <button id="btnExcluirUsuario" type="button" class="btn btn-primary" onclick="usuario.metodos.excluirUsuario($('#txtUsuarioExcluir').val())">Sim</button>
                 </div>
             </div>
             </div>
