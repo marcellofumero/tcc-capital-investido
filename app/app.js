@@ -7,6 +7,7 @@ const app       = module.exports =  express();
 
 var usuario = require('./routes/usuario');
 var perfilUsuario = require('./routes/perfilUsuario');
+var tipoInvestimento = require('./routes/tipoInvestimento');
 
 app.use(express.static('../public'));
 
@@ -30,6 +31,7 @@ app.get('/',function(req,res){
 
 app.use('/v1/usuario',usuario);
 app.use('/v1/perfilUsuario',perfilUsuario);
+app.use('/v1/tipoInvestimento',tipoInvestimento);
 
 //app.listen(config.web.port);
 app.listen(3000, () => {

@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Área Restrita Usuários - Capital Investido</title>
+        <title>Área Restrita - Capital Investido</title>
         <link href="../assets/img/favicon.png" rel="icon">
         <link href="css/simple-datatables.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" />
@@ -47,27 +47,25 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div id="menuAdministracao">
-                                <div class="sb-sidenav-menu-heading">Administração</div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-address-card"></i></div>
-                                    Gerenciar
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="usuario-listar.html">Usuários</a>
-                                        <a class="nav-link" href="layout-sidenav-light.html">Tipos Investimento</a>
-                                        <a class="nav-link" href="layout-static.html">Modalidades</a>
-                                    </nav>
-                                </div>
+                            <div class="sb-sidenav-menu-heading">Administração</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-address-card"></i></div>
+                                Gerenciar
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="usuario-listar.html">Usuários</a>
+                                    <a class="nav-link" href="tipo-investimento-listar.html">Tipos Investimento</a>
+                                    <a class="nav-link" href="layout-static.html">Modalidades</a>
+                                </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">Trade</div>
                             <a class="nav-link" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
                                 Lista Trade Free
                             </a>
-                            <a id="menuListaTradeVip" class="nav-link" href="index.html">
+                            <a class="nav-link" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
                                 Lista Trade Vip
                             </a>
@@ -95,54 +93,45 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Usuários</h1>
+                        <h1 class="mt-4">Tipos de Investimento</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">Gerenciar</a></li>
-                            <li class="breadcrumb-item">Usuários</li>
-                            <li class="breadcrumb-item active">Listagem</li>
+                            <li class="breadcrumb-item"><a href="tipo-investimento-listar.html">Tipo de Investimento</a></li>
+                            <li class="breadcrumb-item active">Cadastro</li>
                         </ol>
-                        <a href="usuario-cadastrar.html" class="btn btn-primary btn-sm" role="button">
-                            <i class="fas fa-plus"></i>&nbsp;Cadastrar Usuário
-                        </a>                        
-                        <br /><br />
                         <div class="card mb-4">
                             <div class="card-body">
-                                Listagem de usuários cadastrados na área restrita.
+                                Formulário de cadastro de tipos de investimento na área restrita.
                             </div>
-                        </div> 
-                        <div id="msgListaUsuario" class="form-floating mb-3 alert alert-danger" role="alert" style="display: none" >
-                            &nbsp;
                         </div>                                                                       
                         <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-table me-1"></i>
-                                Lista de usuários
+                                <i class="fas fa-address-card"></i>
+                                Cadastro de tipos de investimento
                             </div>
                             <div class="card-body">
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>Nome</th>
-                                            <th>E-mail</th>
-                                            <th>Perfil</th>
-                                            <th>Status</th>     
-                                            <th>Ações</th>                                       
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Nome</th>
-                                            <th>E-mail</th>
-                                            <th>Perfil</th>
-                                            <th>Status</th>
-                                            <th>Ações</th> 
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        
-                                    </tbody>
-                                </table>
-                                
+                                <form id="formCadastrar" action="javascript:tipoinvestimento.metodos.cadastrar($('#inputNome').val() )" class="needs-validation" novalidate>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputNome">Nome</label>
+                                                <input class="form-control" id="inputNome" type="text" placeholder="Informe o nome completo" required />                                                
+                                                <div class="invalid-feedback">Informe o nome.</div>
+                                            </div>
+                                        </div>                                                                                          
+                                    </div>        
+                                    <div class="mt-4 mb-0">
+                                        <div class="d-grid">
+                                            <button class="btn btn-primary" type="submit" >Cadastrar</button>
+                                        </div>
+                                    </div>
+                                    <div class="form-floating">
+                                        &nbsp;
+                                    </div>
+                                    <div id="msgCadastro" class="form-floating mb-3 alert alert-danger" role="alert" style="display: none" >
+                                        &nbsp;
+                                    </div>
+                                </form>                                
                             </div>
                         </div>
                     </div>
@@ -161,47 +150,15 @@
                 </footer>
             </div>
         </div>
-        
-        <!-- Modal Excluir-->
-        <div class="modal fade" id="modalExemplo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Exclusão de Usuário</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    Deseja realmente excluir o usuário <i><span id="lblNomeUsuarioExcluir"></span></i>?
-                    <input type="hidden" id="txtUsuarioExcluir" />
-                    <div id="msgExcluirUsuario" class="form-floating mb-3 alert alert-danger" role="alert" style="display: none" >
-                        &nbsp;
-                    </div>
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                <button id="btnExcluirUsuario" type="button" class="btn btn-primary" onclick="usuario.metodos.excluirUsuario($('#txtUsuarioExcluir').val())">Sim</button>
-                </div>
-            </div>
-            </div>
-        </div>
-
         <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
         
         <script src="js/jquery.js"></script>
         <script src="js/comum.js"></script>
-        <script src="js/usuario.js"></script>
+        <script src="js/tipo-investimento.js"></script>
 
-        <script src="js/datatable-simple.js"></script>
+       <script src="js/datatable-simple.js"></script>
 
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" crossorigin="anonymous">
-        <script src="bootstrap/js/bootstrap.min.js"  crossorigin="anonymous"></script>
-
-       <script>
-           usuario.metodos.listarTodos();
-       </script>
-       
+              
     </body>
 </html>

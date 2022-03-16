@@ -69,7 +69,7 @@ usuario.metodos = {
             });
         } 
         catch (erro){
-            comum.metodos.mensagemInformativa('msgCriarConta','Ocorreu um erro inesperado: ' + erro,'erro');
+            comum.metodos.mensagemInformativa('msgListaUsuario','Ocorreu um erro inesperado: ' + erro,'erro');
         }
     },
 

@@ -1,8 +1,8 @@
-var express = require('express');
-var router  = express.Router();
-var controller = require('../controllers/perfilUsuario');
-var UsuarioTokenAcesso = require('../models/protecaoTokenAcesso');
-var Acesso = new UsuarioTokenAcesso();
+const express = require('express');
+const router  = express.Router();
+const controller = require('../controllers/perfilUsuario');
+const UsuarioTokenAcesso = require('../models/protecaoTokenAcesso');
+const Acesso = new UsuarioTokenAcesso();
 
 //################################################################################
 //##########  ##########
