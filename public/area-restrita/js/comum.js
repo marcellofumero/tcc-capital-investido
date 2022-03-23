@@ -31,7 +31,7 @@ comum.eventos = {
 
     verificaTokenAcesso: () => {
         if (!localStorage.getItem('TokenAcesso')) {
-            window.location.href = './401.html'
+            window.location.href = './401.html';
         }
     }
 }
@@ -88,6 +88,12 @@ comum.metodos = {
                 $('#menuListaTradeVip').hide();
                 break;                    
         } 
+    },
+
+    executaPermissaoPagina: () => {
+        if (localStorage.getItem('PerfilUsuario') != "Administrador"){
+            window.location.href = './401.html';
+        }
     }
 
 }

@@ -22,6 +22,13 @@ usuario.var = {
 usuario.metodos = {
 
     listarTodos: () => {
+        if (localStorage.getItem('PerfilUsuario') == "Administrador"){
+            $('#btnCadastrarUsuario').show();
+        }
+        else{
+            $('#btnCadastrarUsuario').hide();
+        }
+
         try{                                 
             $.ajax({
                 type: 'GET',

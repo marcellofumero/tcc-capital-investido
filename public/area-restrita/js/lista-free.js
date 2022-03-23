@@ -20,9 +20,10 @@ listafree.var = {
 
 listafree.metodos = {
 
-    listarTodos: () => {
+    listarTodos: async () => {        
+
         try{                                 
-            $.ajax({
+            await $.ajax({
                 type: 'GET',
                 url: comum.var.urlApiAreaRestrita + '/v1/listaFree/listaFree/',
                 beforeSend: (request) => { request.setRequestHeader("Authorization", "Bearer "+localStorage.getItem('TokenAcesso')); },
@@ -31,7 +32,7 @@ listafree.metodos = {
 
                         response.dados.map((elem,i) => { 
                             let tipoInvestimento = elem.tipoInvestimento == undefined ? '' : elem.tipoInvestimento.nome;
-                            let dataFormatada = elem.data.substr(0, 10).split('-').reverse().join('/')                                                      
+                            let dataFormatada = elem.data.substr(0, 10).split('-').reverse().join('/');                                                    
                             $("#datatablesSimple tbody").append(`
                                 <tr>
                                     <td>${dataFormatada}</td>  
@@ -39,12 +40,13 @@ listafree.metodos = {
                                     <td>${elem.titulo}</td>
                                     <td>${elem.texto}</td>                                  
                                     <td align="center">
-                                        <a href="lista-free-editar.html?id=${elem._id}" style="text-decoration:none !important">
-                                            <i class="far fa-edit" title="Editar" style="cursor:pointer"></i>
-                                        </a>
-                                        &nbsp;
-                                        <i class="far fa-trash-alt" data-toggle="modal" data-target="#modalExcluir" onclick="$('#msgExcluir').hide();$('#lblNomeListaTradeFreeExcluir').text('${elem.titulo}');$('#txtListaTradeFreeExcluir').val('${elem._id}')" title="Excluir" style="cursor:pointer" ></i>
-                                        
+                                        <div class="btnAcoesEditarExcluir">
+                                            <a href="lista-free-editar.html?id=${elem._id}" style="text-decoration:none !important">
+                                                <i class="far fa-edit" title="Editar" style="cursor:pointer"></i>
+                                            </a>
+                                            &nbsp;
+                                            <i class="far fa-trash-alt" data-toggle="modal" data-target="#modalExcluir" onclick="$('#msgExcluir').hide();$('#lblNomeListaTradeFreeExcluir').text('${elem.titulo}');$('#txtListaTradeFreeExcluir').val('${elem._id}')" title="Excluir" style="cursor:pointer" ></i>
+                                        </div>
                                     </td>                          
                                 </tr>
                             `); 
@@ -69,6 +71,15 @@ listafree.metodos = {
         } 
         catch (erro){
             comum.metodos.mensagemInformativa('msgListaTradeFree','Ocorreu um erro inesperado: ' + erro,'erro');
+        }
+
+        if (localStorage.getItem('PerfilUsuario') == "Administrador"){
+            $('#btnCadastrarListaTradeFree').show();
+            $('.btnAcoesEditarExcluir').show();
+        }
+        else{
+            $('#btnCadastrarListaTradeFree').hide();
+            $('.btnAcoesEditarExcluir').hide();
         }
     },
 
@@ -101,16 +112,22 @@ listafree.metodos = {
     
     obterDadosEdicao: () => {        
         try{                                 
-            var idTipoInvestimento = location.search.slice(1).split('=')[1];
-                        
+            var idListaTrade = location.search.slice(1).split('=')[1];
+
+            listafree.metodos.listarTipoInvestimento();
+                                    
             $.ajax({
                 type: 'GET',
-                url: comum.var.urlApiAreaRestrita + '/v1/tipoInvestimento/tipoInvestimento/' + idTipoInvestimento,
+                url: comum.var.urlApiAreaRestrita + '/v1/listaFree/listaFree/' + idListaTrade,
                 beforeSend: (request) => { request.setRequestHeader("Authorization", "Bearer "+localStorage.getItem('TokenAcesso')); },
                 success: function (response) { 
                                      
                     if (response.status == 200){
-                        $("#inputNome").val(response.dados.nome);      
+                        $("#inputData").val(response.dados.data.substr(0, 10));
+                        $("#inputTitulo").val(response.dados.titulo); 
+                        $("#inputTexto").val(response.dados.texto);   
+                        $("#selectStatus option[value="+response.dados.status+"]").attr('selected','selected');     
+                        $("#selectTipoInvestimento option[value="+response.dados.tipoInvestimento._id+"]").attr('selected','selected');     
                     }                        
                 },
                 error: function (xhr, ajaxOptions, error) {
@@ -129,14 +146,14 @@ listafree.metodos = {
         }
     },
 
-    atualizar: (nome = null) => {        
+    atualizar: (data = null , titulo = null , tipoInvestimento = null , status = 'Ativo' , texto = null) => {        
         try{   
-            var idTipoInvestimento = location.search.slice(1).split('=')[1]             
-            const dados = { nome };
+            var idListaTrade = location.search.slice(1).split('=')[1]             
+            const dados = { data , titulo , tipoInvestimento , status , texto }; 
                    
             $.ajax({
                 type: 'PUT',
-                url: comum.var.urlApiAreaRestrita + '/v1/tipoInvestimento/tipoInvestimento/' + idTipoInvestimento,
+                url: comum.var.urlApiAreaRestrita + '/v1/listaFree/listaFree/' + idListaTrade,
                 data: dados,
                 beforeSend: (request) => { request.setRequestHeader("Authorization", "Bearer "+localStorage.getItem('TokenAcesso')) },
                 success: function (response) {                   
@@ -144,8 +161,7 @@ listafree.metodos = {
                         comum.metodos.mensagemInformativa('msgEditar',response.mensagem,'sucesso');                                                            
                     }                        
                 },
-                error: function (xhr, ajaxOptions, error) {
-                    console.log(xhr)
+                error: function (xhr, ajaxOptions, error) {                    
                     if (xhr.status == 400){
                         comum.metodos.mensagemInformativa('msgEditar',xhr.responseJSON.mensagem,'erro');
                     }

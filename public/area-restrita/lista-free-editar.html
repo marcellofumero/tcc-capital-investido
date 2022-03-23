@@ -63,7 +63,7 @@
                                 </div>
                             </div>
                             <div class="sb-sidenav-menu-heading">Trade</div>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="lista-free-listar.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
                                 Lista Trade Free
                             </a>
@@ -95,33 +95,69 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">Tipos de Investimentos</h1>
+                        <h1 class="mt-4">Lista Free de Trade</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item"><a href="index.html">Gerenciar</a></li>
-                            <li class="breadcrumb-item"><a href="tipo-investimento-listar.html">Tipo de Investimento</a></li>
+                            <li class="breadcrumb-item"><a href="lista-free-listar.html">Lista de Trade Free</a></li>
                             <li class="breadcrumb-item active">Edição</li>
                         </ol>
                         <div class="card mb-4">
                             <div class="card-body">
-                                Formulário de edição dos tipos de investimento.
+                                Formulário de edição de lista de trade free.
                             </div>
                         </div>                                                                       
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-address-card"></i>
-                                Edição de tipo de investimento
+                                Edição de lista free de trade
                             </div>
                             <div class="card-body">
-                                <form id="formEditarConta" action="javascript:tipoinvestimento.metodos.atualizar($('#inputNome').val() )" class="needs-validation" novalidate>
+                                <form id="formEditarConta" action="javascript:listafree.metodos.atualizar($('#inputData').val(),$('#inputTitulo').val(),$('#selectTipoInvestimento').val(),$('#selectStatus').val(),$('#inputTexto').val() )" class="needs-validation" novalidate>
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label for="inputNome">Nome</label>
-                                                <input class="form-control" id="inputNome" type="text" placeholder="Informe o nome completo" required />                                                
-                                                <div class="invalid-feedback">Informe o nome.</div>
+                                                <label for="inputData">Data</label>
+                                                <input class="form-control" id="inputData" type="date" placeholder="Informe a data" required />                                                
+                                                <div class="invalid-feedback">Informe a data.</div>
                                             </div>
-                                        </div>                                                                                        
-                                    </div>
+                                        </div> 
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="inputTitulo">Titulo</label>
+                                                <input class="form-control" id="inputTitulo" type="text" placeholder="Informe o título" required />                                                
+                                                <div class="invalid-feedback">Informe o título.</div>
+                                            </div>
+                                        </div>                                                                                                                                   
+                                    </div>   
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="selectTipoInvestimento">Tipo Investimento</label>
+                                                <select class="form-control" id="selectTipoInvestimento">
+                                                    <option>Informe um tipo de investimento</option>                                                    
+                                                </select>
+                                                <div class="invalid-feedback">Informe um tipo de investimento.</div>
+                                            </div>
+                                        </div>   
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="selectStatus">Status</label>
+                                                <select class="form-control" id="selectStatus">
+                                                    <option value="Ativo">Ativo</option>
+                                                    <option value="Inativo">Inativo</option>
+                                                </select>                                                
+                                            </div>
+                                        </div>                                              
+                                    </div> 
+                                    <div class="row mb-3">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="inputTexto">Dicas/Descrição</label>
+                                                <textarea class="form-control" id="inputTexto" placeholder="Informe o texto" required ></textarea>                                                
+                                                <div class="invalid-feedback">Informe o texto.</div>
+                                            </div>
+                                        </div>                                            
+                                    </div>  
                                     <div class="mt-4 mb-0">
                                         <div class="d-grid">
                                             <button class="btn btn-primary" type="submit" >Editar Dados</button>
@@ -157,10 +193,11 @@
         
         <script src="js/jquery.js"></script>
         <script src="js/comum.js"></script>
-        <script src="js/tipo-investimento.js"></script>
+        <script src="js/lista-free.js"></script>
 
         <script>
-            tipoinvestimento.metodos.obterDadosEdicao();
+            comum.metodos.executaPermissaoPagina();
+            listafree.metodos.obterDadosEdicao();            
         </script>
 
     </body>
