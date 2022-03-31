@@ -10,7 +10,7 @@ var perfilUsuario = require('./routes/perfilUsuario');
 var tipoInvestimento = require('./routes/tipoInvestimento');
 var listaFree = require('./routes/listaFree');
 
-app.use(express.static('../public'));
+app.use(express.static('public'));
 
 app.use(bodyParser.urlencoded({extended:true}));
 
