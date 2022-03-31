@@ -181,13 +181,13 @@ usuario.metodos = {
             const dados = { nome , email , perfil , status };
             if (password != null && password != '' && password != undefined){
                 dados['password'] = password;
-            }
-            console.log('atualizarDadosUsuario',dados)   
-                   
+            }             
+                  
             $.ajax({
                 type: 'PUT',
                 url: comum.var.urlApiAreaRestrita + '/v1/usuario/usuario/' + idUsuario,
                 data: dados,
+                beforeSend: (request) => { request.setRequestHeader("Authorization", "Bearer "+localStorage.getItem('TokenAcesso')); },
                 success: function (response) {                   
                     if (response.status == 201){
                         comum.metodos.mensagemInformativa('msgEditarConta',response.mensagem,'sucesso');                                                            
@@ -195,7 +195,7 @@ usuario.metodos = {
                 },
                 error: function (xhr, ajaxOptions, error) {
                     console.log(xhr)
-                    if (xhr.status == 400){
+                    if (xhr.status == 400 || xhr.status == 401){
                         comum.metodos.mensagemInformativa('msgEditarConta',xhr.responseJSON.mensagem,'erro');
                     }
                 }
