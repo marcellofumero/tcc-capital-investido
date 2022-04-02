@@ -134,7 +134,7 @@ login.metodos = {
         }
     },
 
-    criarConta: (nome = null, email = null , password = null, status = 'Ativo') => {        
+    criarConta: (nome = null, email = null , password = null, status = 'Ativo', perfil = '6245055321d585c37d128e78') => {        
         try{                
             const dados = { nome , email , password , status };
                         
