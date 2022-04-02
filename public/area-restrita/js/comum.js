@@ -24,8 +24,9 @@ $(document).ready(() => {
 })
 
 comum.eventos = {
-    init: () => {        
-        localStorage.setItem('UrlApiAreaRestrita','http://localhost:3000');  
+    init: () => {   
+        localStorage.setItem('UrlApiAreaRestrita','https://capital-investido.herokuapp.com:3000');     
+        // localStorage.setItem('UrlApiAreaRestrita','http://localhost:3000');  
         comum.metodos.executaPermissao();      
     },
 
