@@ -153,6 +153,7 @@ login.metodos = {
                         localStorage.setItem("IdUsuario",response._id);
                         localStorage.setItem("NomeUsuario",nome);
                         localStorage.setItem("EmailUsuario",email);
+                        localStorage.setItem("PerfilUsuario","Perfil Free");
 
                         window.setTimeout(()=>{
                             window.location.href = "index.html"
