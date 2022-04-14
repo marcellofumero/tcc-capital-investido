@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Área Restrita - Capital Investido</title>
+        <link href="../assets/img/favicon.png" rel="icon">
+        <link href="css/simple-datatables.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="js/font-awesome-all.min.js" crossorigin="anonymous"></script>
+        
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="index.html">Capital Investido</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <span style="color: white;">Bem vindo, </span> &nbsp;<span id="spanNomeUsuarioCabecalho" style="color: white;"> </span>
+                    <!--
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                    -->
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!" onclick="comum.metodos.direcionaDadosPessoais()">Meus Dados</a></li>
+                        <!--<li><a class="dropdown-item" href="#!">Activity Log</a></li>-->
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#" onclick="comum.metodos.logout()">Sair</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div id="menuAdministracao">
+                                <div class="sb-sidenav-menu-heading">Administração</div>
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-address-card"></i></div>
+                                    Gerenciar
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="usuario-listar.html">Usuários</a>
+                                        <a class="nav-link" href="tipo-investimento-listar.html">Tipos Investimento</a>
+                                        <a class="nav-link" href="layout-static.html">Modalidades</a>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="sb-sidenav-menu-heading">Trade</div>
+                            <a class="nav-link" href="lista-free-listar.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+                                Lista Trade Free
+                            </a>
+                            <a id="menuListaTradeVip" class="nav-link" href="lista-vip-listar.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-list"></i></div>
+                                Lista Trade Vip
+                            </a>
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-robot"></i></div>
+                                Robôs
+                            </a>
+                            <div class="sb-sidenav-menu-heading">Informações</div>
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                Notícias
+                            </a>
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-bullhorn"></i></div>
+                                Avisos
+                            </a>                            
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logado em:</div>
+                        Área Restrita
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Avisos</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item"><a href="index.html">Gerenciar</a></li>
+                            <li class="breadcrumb-item">Avisos</li>
+                            <li class="breadcrumb-item active">Listagem</li>
+                        </ol>
+                        <a href="aviso-cadastrar.html" id="btnCadastrarAviso" class="btn btn-primary btn-sm" role="button">
+                            <i class="fas fa-plus"></i>&nbsp;Cadastrar Aviso
+                        </a>                        
+                        <br /><br />
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                Lista de Avisos.
+                            </div>
+                        </div>       
+                        <div id="msgListaAviso" class="form-floating mb-3 alert alert-danger" role="alert" style="display: none" >
+                            &nbsp;
+                        </div>                                                                
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-table me-1"></i>
+                                Lista de avisos/comunicados do Capital Investido 
+                            </div>
+                            <div class="card-body">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Data</th>                                              
+                                            <th>Titulo</th>
+                                            <th>Texto</th>                                               
+                                            <th>Ações</th>                                       
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Data</th>                                              
+                                            <th>Titulo</th>
+                                            <th>Texto</th>                                               
+                                            <th>Ações</th>   
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Capital Investido 2021</div>
+                            <div>
+                                <a href="#">Politica de Privacidade</a>
+                                &middot;
+                                <a href="#">Termos &amp; Condições</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        
+        <!-- Modal Excluir-->
+        <div class="modal fade" id="modalExcluir" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Exclusão de Aviso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    Deseja realmente excluir o aviso <i><span id="lblNomeAvisoExcluir"></span></i>?
+                    <input type="hidden" id="txtAvisoExcluir" />
+                    <div id="msgExcluir" class="form-floating mb-3 alert alert-danger" role="alert" style="display: none" >
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
+                <button id="btnExcluirAviso" type="button" class="btn btn-primary" onclick="aviso.metodos.excluir($('#txtAvisoExcluir').val())">Sim</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        
+        <script src="js/jquery.js"></script>
+        <script src="js/comum.js"></script>
+        <script src="js/aviso.js"></script>
+
+        <script src="js/datatable-simple.js"></script>
+
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" crossorigin="anonymous">
+        <script src="bootstrap/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+
+        <script>
+            aviso.metodos.listarTodos();
+        </script>
+       
+    </body>
+</html>

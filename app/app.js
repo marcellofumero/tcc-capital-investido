@@ -12,6 +12,7 @@ var listaFree = require('./routes/listaFree');
 var listaVip = require('./routes/listaVip');
 var modalidadeInvestimento = require('./routes/modalidadeInvestimento');
 var noticia = require('./routes/noticia');
+var aviso = require('./routes/aviso');
 
 app.use(express.static('public'));
 
@@ -40,6 +41,7 @@ app.use('/v1/listaFree',listaFree);
 app.use('/v1/listaVip',listaVip);
 app.use('/v1/modalidadeInvestimento',modalidadeInvestimento);
 app.use('/v1/noticia',noticia);
+app.use('/v1/aviso',aviso);
 
 //app.listen(config.web.port);
 const port = process.env.PORT || 3000;
