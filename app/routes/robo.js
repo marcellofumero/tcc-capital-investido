@@ -7,7 +7,7 @@ const multer  = require('multer');
 // Configuração de armazenamento
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/')
+        cb(null, 'public/uploads/')
     },
     filename: function (req, file, cb) {
         // Extração da extensão do arquivo original:
@@ -50,7 +50,7 @@ router.post('/robo', Acesso.verificaTokenAcesso, upload.single('arquivo') , func
     })
 });
 
-router.put('/robo/:id', Acesso.verificaTokenAcesso, function(req, res){       
+router.put('/robo/:id', Acesso.verificaTokenAcesso , upload.single('arquivo') , function(req, res){       
     controller.roboAtualizar(req,function(resp){
         res.status(resp.status).json(resp);
     })
