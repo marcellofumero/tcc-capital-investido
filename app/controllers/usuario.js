@@ -168,7 +168,6 @@ exports.usuarioResetarSenha = async function(req, callback){
     }                              
 };  
 
-
 exports.usuarioExcluir = async function(req, callback){
     try{        
         const { id } = req.params;
@@ -178,4 +177,54 @@ exports.usuarioExcluir = async function(req, callback){
     } catch (erro){
         callback({status: 400, mensagem: 'Não foi possível realizar a exclusão do usuário.', erro: erro}); 
     }                          
+}; 
+
+exports.graficoStatus = async function(req, callback){
+    try{
+               
+        const pipeline = [
+            {
+                '$group': {
+                    '_id':  '$status' ,
+                    'quantidade':{
+                        '$sum':1
+                    }
+                }
+            }
+        ];
+        const usuario = await Usuario.aggregate(pipeline);       
+        
+        if (usuario){
+            callback({status: 200, mensagem: 'Dados do relatório gerados com sucesso.', dados: usuario}); 
+        }else{
+            callback({status: 200, mensagem: 'Não foi possível gerar os dados do relatório.'}); 
+        }               
+    } catch (erro){
+        callback({status: 400, mensagem: 'Ocorreu uma falha ao gerar os dados para o relatório.', erro: erro}); 
+    }                              
+}; 
+
+exports.graficoPerfil = async function(req, callback){
+    try{
+               
+        const pipeline = [
+            {
+                '$group': {
+                    '_id':  '$perfil' ,
+                    'quantidade':{
+                        '$sum':1
+                    }
+                }
+            }
+        ];
+        const usuario = await Usuario.aggregate(pipeline);       
+        
+        if (usuario){
+            callback({status: 200, mensagem: 'Dados do relatório gerados com sucesso.', dados: usuario}); 
+        }else{
+            callback({status: 200, mensagem: 'Não foi possível gerar os dados do relatório.'}); 
+        }               
+    } catch (erro){
+        callback({status: 400, mensagem: 'Ocorreu uma falha ao gerar os dados para o relatório.', erro: erro}); 
+    }                              
 }; 

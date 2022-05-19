@@ -56,5 +56,17 @@ router.post('/resetarSenha', function(req, res){
     })
 });
 
+router.get('/graficoStatus', function(req, res){       
+    controller.graficoStatus(req,function(resp){
+        res.status(resp.status).json(resp);
+    })
+});
+
+router.get('/graficoPerfil', function(req, res){       
+    controller.graficoPerfil(req,function(resp){
+        res.status(resp.status).json(resp);
+    })
+});
+
 
 module.exports = router;

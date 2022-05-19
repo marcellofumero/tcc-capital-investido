@@ -45,7 +45,7 @@ exports.roboCadastrar = async function(req, callback){
 exports.roboAtualizar = async function(req, callback){
     try{ 
                
-        if (req.file.originalname != undefined && req.file){
+        if (req.file && req.file.originalname != undefined && req.file){
             req.body.diretorio_download = req.file.originalname; 
         }                
         const { id } = req.params;
@@ -67,4 +67,19 @@ exports.roboExcluir = async function(req, callback){
     } catch (erro){
         callback({status: 400, mensagem: 'Não foi possível realizar a exclusão do registro.', erro: erro}); 
     }                         
+}; 
+
+exports.graficoPercentualAcerto = async function(req, callback){
+    try{
+               
+        const robo = await Robo.find().populate('tipoInvestimento').populate('modalidadeInvestimento').sort( { percentual_acerto: 1 } );        
+               
+        if (robo){
+            callback({status: 200, mensagem: 'Dados do relatório gerados com sucesso.', dados: robo}); 
+        }else{
+            callback({status: 200, mensagem: 'Não foi possível gerar os dados do relatório.'}); 
+        }               
+    } catch (erro){
+        callback({status: 400, mensagem: 'Ocorreu uma falha ao gerar os dados para o relatório.', erro: erro}); 
+    }                              
 }; 

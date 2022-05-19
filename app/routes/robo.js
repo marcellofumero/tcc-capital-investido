@@ -62,5 +62,11 @@ router.delete('/robo/:id', Acesso.verificaTokenAcesso, function(req, res){
     })
 });
 
+router.get('/graficoPercentualAcerto', function(req, res){       
+    controller.graficoPercentualAcerto(req,function(resp){
+        res.status(resp.status).json(resp);
+    })
+});
+
 
 module.exports = router;
