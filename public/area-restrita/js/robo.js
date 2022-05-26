@@ -52,10 +52,11 @@ robo.metodos = {
                                             &nbsp;
                                             <i class="far fa-trash-alt" data-toggle="modal" data-target="#modalExcluir" onclick="$('#msgExcluir').hide();$('#lblNomeRoboExcluir').text('${elem.titulo}');$('#txtRoboExcluir').val('${elem._id}')" title="Excluir" style="cursor:pointer" ></i>
                                             &nbsp;
+                                            
+                                        </div>
                                             <a href="../uploads/${elem.diretorio_download}" target="_blank" style="text-decoration:none !important">
                                                 <i class="fas fa-download" title="Download" style="cursor:pointer"></i>
                                             </a>
-                                        </div>
                                     </td>                          
                                 </tr>
                             `); 
