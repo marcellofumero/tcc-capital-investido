@@ -25,8 +25,8 @@ $(document).ready(() => {
 
 comum.eventos = {
     init: () => {   
-        // localStorage.setItem('UrlApiAreaRestrita','https://capital-investido.herokuapp.com');     
-        localStorage.setItem('UrlApiAreaRestrita','http://localhost:3000');  
+        localStorage.setItem('UrlApiAreaRestrita','https://capital-investido.herokuapp.com');     
+        // localStorage.setItem('UrlApiAreaRestrita','http://localhost:3000');  
         comum.metodos.executaPermissao();      
     },
 
@@ -83,9 +83,11 @@ comum.metodos = {
         switch (localStorage.getItem('PerfilUsuario'))  {
             case "Perfil Vip":
                 $('#menuAdministracao').hide();
+                $('#painelGraficoUsuarios').hide();
                 break;
             case "Perfil Free":
                 $('#menuAdministracao').hide();
+                $('#painelGraficoUsuarios').hide();
                 $('#menuListaTradeVip').hide();
                 break;                    
         } 
