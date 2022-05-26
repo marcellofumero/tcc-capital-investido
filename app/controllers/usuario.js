@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 const mailer = require('../functions/mailer');
 
+
 exports.usuarioListar = async function(req, callback){
     try{
         const { id } = req.params;
@@ -190,6 +191,9 @@ exports.graficoStatus = async function(req, callback){
                         '$sum':1
                     }
                 }
+            },
+            {
+                '$sort': { '_id': 1 }
             }
         ];
         const usuario = await Usuario.aggregate(pipeline);       
@@ -224,6 +228,59 @@ exports.graficoPerfil = async function(req, callback){
         }else{
             callback({status: 200, mensagem: 'Não foi possível gerar os dados do relatório.'}); 
         }               
+    } catch (erro){
+        callback({status: 400, mensagem: 'Ocorreu uma falha ao gerar os dados para o relatório.', erro: erro}); 
+    }                              
+}; 
+
+exports.relatorioPdf = async function(req, callback){
+    try{
+
+        const usuario = await Usuario.find().populate('perfil'); 
+        //console.log(usuario)
+        var html = `
+            <b1><center>RELATÓRIO DE USUÁRIOS</center></b1>
+            <hr>
+            <table border=1 width=100%>
+                <tr>
+                    <td><b>Nome</b></td>
+                    <td><b>Perfil</b></td>
+                    <td><b>Status</b></td>
+                </tr>    
+        `;
+
+        for (var f of usuario){
+            var html = html + `            
+                <tr>
+                    <td>${f.nome}</td>
+                    <td>${f.perfil.nome}</td>
+                    <td>${f.status}</td>
+                </tr>    
+            `;
+        }	
+        
+        var html = html + `
+                </table>    
+            `;
+        
+        var fs = require('fs');
+        var pdf = require('html-pdf');
+        //var html = fs.readFileSync('./test/businesscard.html', 'utf8');
+        
+        var options = { format: 'Letter' };
+
+        /*
+        pdf.create(html, options).toFile('./businesscard.pdf', function(err, res) {
+        if (err) return console.log(err);
+        console.log(res); // { filename: '/app/businesscard.pdf' }
+        });
+        */
+        pdf.create(html).toBuffer(function(err, buffer){
+            console.log('gerou buffer:', Buffer.isBuffer(buffer));
+            callback(buffer);
+        });     
+        //callback({status: 200, mensagem: 'Dados do relatório gerados com sucesso.', dados: usuario}); 
+                       
     } catch (erro){
         callback({status: 400, mensagem: 'Ocorreu uma falha ao gerar os dados para o relatório.', erro: erro}); 
     }                              

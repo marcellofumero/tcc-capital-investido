@@ -71,7 +71,7 @@ painel.metodos = {
             labels: coluna,
             datasets: [{
             data: valor,
-            backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
+            backgroundColor: [ '#28a745', '#dc3545','#007bff','#ffc107'],
             }],
         },
         });
@@ -221,5 +221,56 @@ painel.metodos = {
         
     },
 
+    relatorioPdf: async () => {  
+        
+        try{                                 
+            await $.ajax({
+                type: 'GET',
+                url: comum.var.urlApiAreaRestrita + '/v1/usuario/relatorioPdf',
+                xhrFields: {
+                    responseType: "blob" },
+                   contentType: "application/json",                
+                beforeSend: (request) => { request.setRequestHeader("Authorization", "Bearer "+localStorage.getItem('TokenAcesso')); },
+                success: function (response) {                   
+                    // res Is a binary stream 
+                    console.log(" success ",response)
+                    let blob = new Blob([response])
+                    let da = document.createElement('a')
+                    da.href = URL.createObjectURL(blob);
+                    da.setAttribute("download","relatorio.pdf");
+                    da.click();
+                    URL.revokeObjectURL(da.href);
+
+                    /*
+                    // Outra forma de fazer o donwload
+                    const a = document.createElement("a");
+                    a.href = URL.createObjectURL(
+                        new Blob([response], {
+                        type: "application/pdf"
+                        })
+                    );
+                    a.setAttribute("download", "data.pdf");
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    */
+                },
+                error: function (xhr, ajaxOptions, error) {
+                    if (xhr.status == 400){
+                        console.log('error 400',xhr)
+                    }
+                    if (xhr.status == 401){
+                        console.log('error 401',xhr)
+                        window.location.href = './401.html'
+                    }
+                }
+            });
+        } 
+        catch (erro){
+            comum.metodos.mensagemInformativa('msgErroGrafico','Ocorreu um erro inesperado: ' + erro,'erro');
+            console.log('erro catch',erro);
+        }
+  
+    },
 
 }

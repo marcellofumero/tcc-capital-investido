@@ -68,5 +68,15 @@ router.get('/graficoPerfil', function(req, res){
     })
 });
 
+router.get('/relatorioPdf', function(req, res){   
+    
+    controller.relatorioPdf(req,function(resp){
+        res.setHeader('Content-type', 'application/pdf');
+        res.setHeader('Content-disposition', 'attachment; filename=export-from-html.pdf');
+        res.send(resp);
+    })
+    
+    
+});
 
 module.exports = router;
